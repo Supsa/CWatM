@@ -98,7 +98,7 @@ class interception(object):
 
         # Rain instead Pr, because snow is substracted later
         # assuming that all interception storage is used the other time step
-        if coverType in ['forest', 'grassland']:
+        if coverType in ['forest', 'grassland', 'irrNonPaddy']:
             throughfall = np.maximum(0.0, self.var.Rain + self.var.interceptStor[No] - 
                                      self.var.interceptCap[No, dateVar['30day'], :])
         else:
@@ -110,12 +110,12 @@ class interception(object):
         # availWaterInfiltration Available water for infiltration: throughfall + snow melt
         self.var.availWaterInfiltration[No] = np.maximum(0.0, throughfall + self.var.SnowMelt + self.var.IceMelt)
 
-        if coverType in ['forest', 'grassland']:
+        if coverType in ['forest', 'grassland', 'irrNonPaddy']:
             mult = (divideValues(self.var.interceptStor[No], self.var.interceptCap[No, dateVar['30day'], :]) ** 
                     self.var.twothird)
             # interceptEvap evaporation from intercepted water (based on potTranspiration)
             self.var.interceptEvap[No] = np.minimum(self.var.interceptStor[No], self.var.potTranspiration[No] * mult)
-        if coverType in ['irrPaddy', 'irrNonPaddy']:
+        if coverType in ['irrPaddy']:
             mult = (divideValues(self.var.interceptStor[No], self.var.minInterceptCap[No] + globals.inZero) ** 
                     self.var.twothird)
             # interceptEvap evaporation from intercepted water (based on potTranspiration)
