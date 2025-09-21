@@ -386,17 +386,10 @@ class landcoverType(object):
             self.var.maxRootDepth.append(loadmap(coverType + "_maxRootDepth") * soildepth_factor)
 
             self.var.rootDepth[0][i] = self.var.soildepth[0].copy()  # 0.05 m
-            # if land cover = forest
-            if coverType != 'grassland':
-                # soil layer 1 = root max of land cover  - first soil layer
-                h1 = np.maximum(self.var.soildepth[1], self.var.maxRootDepth[i] - self.var.soildepth[0])
-                #
-                self.var.rootDepth[1][i] = np.minimum(self.var.soildepth12 - 0.05, h1)
-                # soil layer is minimim 0.05 m
-                self.var.rootDepth[2][i] = np.maximum(0.05, self.var.soildepth12 - self.var.rootDepth[1][i])
-            else:
-                self.var.rootDepth[1][i] = self.var.soildepth[1].copy()
-                self.var.rootDepth[2][i] = self.var.soildepth[2].copy()
+            h1 = self.var.maxRootDepth[i] - self.var.soildepth[0]
+            self.var.rootDepth[1][i] = np.minimum(self.var.soildepth12 - 0.05, h1)
+            # soil layer is minimim 0.05 m
+            self.var.rootDepth[2][i] = np.maximum(0.05, self.var.soildepth12 - self.var.rootDepth[1][i])
             i += 1
 
 
