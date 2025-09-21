@@ -384,11 +384,13 @@ class landcoverType(object):
 
             soildepth_factor = loadmap('soildepth_factor')
             self.var.maxRootDepth.append(loadmap(coverType + "_maxRootDepth") * soildepth_factor)
-
+            # top soil layer (rootDepth[0]) thickness is set to 0.05 m
             self.var.rootDepth[0][i] = self.var.soildepth[0].copy()  # 0.05 m
+            # for each landcover: intermediate soil layer (rootDepth[1]) = maxRootDepth - 0.05 m,
             h1 = self.var.maxRootDepth[i] - self.var.soildepth[0]
+            # make sure intermediate soil layer is not thicker than total soil thickness (StorDepth1 + StorDepth2)
             self.var.rootDepth[1][i] = np.minimum(self.var.soildepth12 - 0.05, h1)
-            # soil layer is minimim 0.05 m
+            # bottom soil layer (rootDeptjh[2]) cannot be thiner than 0.05 m
             self.var.rootDepth[2][i] = np.maximum(0.05, self.var.soildepth12 - self.var.rootDepth[1][i])
             i += 1
 

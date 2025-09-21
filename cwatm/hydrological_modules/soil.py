@@ -104,7 +104,7 @@ class soil(object):
     PotET_crop                           Array                                                                                 --   
     actualET                             Array         simulated evapotranspiration from soil, flooded area and vegetation     m    
     soilLayers                           Array         Number of soil layers                                                   --   
-    soildepth                            Array         Thickness of the first soil layer                                       m    
+    soildepth                            Array         Thickness of the soil layers                                     m    
     wfc1                                 Array         Soil moisture at field capacity in layer 1                              m    
     wfc2                                 Array         Soil moisture at field capacity in layer 2                              m    
     wfc3                                 Array         Soil moisture at field capacity in layer 3                              m    
